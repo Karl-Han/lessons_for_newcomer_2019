@@ -25,7 +25,7 @@ int max_rec(int* arr, int pos, int length) {
         return arr[pos];
     }
     int max_rest = max_rec(arr, pos + 1, length);
-    return arr[pos] > max_rest ? arr[pos] : max_rest;
+    return (arr[pos] > max_rest) ? arr[pos] : max_rest;
 }
 
 // Find max recursively
@@ -75,14 +75,15 @@ void pointer_alone() {
     // Automatically add \0 at the end of char*
     for (int i = 0; i < 11; i++) {
         printf("%u ", str[i]);
+        printf("%c ", str[i]);
     }
     newline();
     // Remember to add \0 if use array
 
     // Double pointer(pointer on pointer)
     // Explain later
-    void** ptr2 = (void**)&str;
-    printf("Derefer doule pointer : %s\n", (char*)*ptr2);
+    char** ptr2 = &str;
+    printf("Derefer doule pointer : %s\n", *ptr2);
 }
 
 void pointer_and_array() {
@@ -110,6 +111,7 @@ void pointer_and_array() {
         printf("%d ", arr2[i]);
     }
     free(arr2);
+    newline();
 
     // Two dimension array
     int matrix[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
