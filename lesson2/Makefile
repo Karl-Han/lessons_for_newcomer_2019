@@ -11,4 +11,4 @@ all: pointer bsearch
 
 .PHONY: clean
 clean:
-	rm *.o a.out struct bsearch pointer
+	rm *.o a.out struct bsearch pointer 
