@@ -49,11 +49,15 @@
  *
  *
  */
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 char convert(unsigned char ch) {
+    char str[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                    '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    return str[ch];
     if (ch > 15) {
         return 0;
     } else if (ch >= 10) {
@@ -97,7 +101,8 @@ char *toHex(int num) {
 }
 
 int main() {
-    printf("%s\n", toHex(-1));
-    printf("%s\n", toHex(26));
+    assert(strcmp("1a\0", toHex(26)) == 0);
+    assert(strcmp("ffffffff\0", toHex(-1)) == 0);
+    printf("Pass toHex");
     return 0;
 }
