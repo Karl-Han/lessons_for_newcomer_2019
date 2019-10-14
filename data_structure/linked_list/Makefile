@@ -1,4 +1,4 @@
-all: linked_list linked_list_main_complex
+all: linked_list linked_list_complex
 
 linked_list_main.o: linked_list.h linked_list_main.c
 	$(CC) -g -c $^
@@ -20,7 +20,7 @@ linked_list: linked_list_main.o linked_list.o
 
 .PHONY: clean run
 clean:
-	rm *.o a.out linked_list *.h.gch
+	rm *.o a.out *.h.gch linked_list linked_list_complex
 
 run: all
 	./linked_list
