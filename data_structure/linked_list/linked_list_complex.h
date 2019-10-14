@@ -32,4 +32,5 @@ Node* insert_node_before_key(Node* head, int key, Node* to_insert);
 
 Node* insert_node_after_key(Node* head, int key, Node* to_insert);
 
+void remove_entry(Node* temp, Node* key);
 #endif

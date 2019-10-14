@@ -1,7 +1,7 @@
-#include "linked_list.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "linked_list.h"
 
 // Reference:
 // https://www.cs.cmu.edu/~adamchik/15-121/lectures/Linked%20Lists/linked%20lists.html
@@ -100,6 +100,9 @@ Node* delete_key(Node* head, int key) {
 }
 
 Node* add_last_node(Node* head, Node* node) {
+    if (head == NULL) {
+        return node;
+    }
     Node* temp = head;
     while (temp->next != NULL) {
         temp = temp->next;
@@ -143,4 +146,14 @@ Node* insert_node_after_key(Node* head, int key, Node* to_insert) {
         temp->next = to_insert;
     }
     return head;
+}
+
+void remove_entry(Node* head, Node* entry) {
+    Node** indirect = &head;
+
+    while ((*indirect) != entry) {
+        indirect = &(*indirect)->next;
+    }
+
+    *indirect = entry->next;
 }
