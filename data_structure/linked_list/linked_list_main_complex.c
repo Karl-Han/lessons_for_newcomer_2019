@@ -1,8 +1,18 @@
 #include <stddef.h>
 #include <stdio.h>
-#include "linked_list.h"
+#include "linked_list_complex.h"
 
 int main() {
+    Node* temp = NULL;
+
+    Node* n = new_node(1);
+
+    temp = add_last_node(temp, n);
+
+    remove_entry(temp, n);
+
+    trasversal(temp);
+
     printf("head = NULL\n");
     Node* head = NULL;
     trasversal(head);
