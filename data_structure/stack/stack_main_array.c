@@ -10,8 +10,9 @@ int main() {
     push(s, 123);
     assert(*(top(s)) == 123);
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20 && !is_full(s); i++) {
         push(s, i);
+        printf("%d is not full yet\n", i);
     }
 
     int t;

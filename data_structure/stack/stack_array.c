@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "stack_array.h"
 
 Stack* init() {
     Stack* s = (Stack*)malloc(sizeof(Stack));
@@ -7,7 +7,7 @@ Stack* init() {
 }
 
 bool push(Stack* s, int key) {
-    if (s->cursor == 9) {
+    if (is_full(s)) {
         // It is full
         return false;
     }
@@ -18,7 +18,7 @@ bool push(Stack* s, int key) {
 }
 
 bool pop(Stack* s) {
-    if (s->cursor == -1) {
+    if (is_empty(s)) {
         return false;
     }
 
@@ -27,13 +27,15 @@ bool pop(Stack* s) {
 }
 
 int* top(Stack* s) {
-    if (s->cursor != -1) {
+    if (!is_empty(s)) {
         return &(s->array[s->cursor]);
     }
 
     return NULL;
 }
 
-void clear(Stack* s) { free(s); }
-
 bool is_empty(Stack* s) { return (s->cursor == -1); }
+
+bool is_full(Stack* s) { return (s->cursor == 9); }
+
+void clear(Stack* s) { free(s); }

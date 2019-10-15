@@ -10,7 +10,7 @@ Stack* init() {
 void push(Stack* s, int key) { s->head = new_node_next(key, s->head); }
 
 bool pop(Stack* s) {
-    if (s->head != NULL) {
+    if (!is_empty(s)) {
         s->head = s->head->next;
         return true;
     }
@@ -20,6 +20,8 @@ bool pop(Stack* s) {
 int* top(Stack* s) { return &(s->head->num); }
 
 bool is_empty(Stack* s) { return (s->head == NULL); }
+
+bool is_full(Stack* s) { return false; }
 
 void clear_stack(Stack* s) {
     while (!is_empty(s)) {

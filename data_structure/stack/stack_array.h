@@ -40,6 +40,8 @@ int* top(Stack* s);
 
 bool is_empty(Stack* s);
 
+bool is_full(Stack* s);
+
 void clear(Stack* s);
 
 #endif
