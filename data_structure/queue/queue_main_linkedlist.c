@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-#include "queue_array.h"
+#include "queue_linkedlist.h"
 
 int main() {
     Queue* s = init();
@@ -10,14 +10,8 @@ int main() {
     enqueue(s, 123);
     assert(*(get_head(s)) == 123);
 
-    for (int i = 0; i < 20 && (!is_full(s)); i++) {
-        // Enqueue i
-        if (enqueue(s, i)) {
-            printf("%d is not full yet\n", i);
-        } else {
-            printf("ERROR in enqueue");
-            break;
-        }
+    for (int i = 0; i < 20; i++) {
+        enqueue(s, i);
     }
 
     int t;
@@ -27,6 +21,6 @@ int main() {
         dequeue(s);
     }
 
-    clear(s);
+    clear_queue(s);
     return 0;
 }
