@@ -1,12 +1,7 @@
+#include "binary_tree.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct _TreeNode {
-    void* data;
-    struct _TreeNode* left_child;
-    struct _TreeNode* right_child;
-} TreeNode;
 
 TreeNode* new_node(void* p) {
     TreeNode* n = (TreeNode*)malloc(sizeof(TreeNode));
@@ -39,6 +34,7 @@ TreeNode* int2void(int key) {
     return n;
 }
 
+/* Old version of clear_node
 void clear_node(TreeNode* sub_root) {
     if (sub_root != NULL) {
         // clean left
@@ -48,7 +44,16 @@ void clear_node(TreeNode* sub_root) {
         free(sub_root);
     }
 }
+*/
 
+void free_node(TreeNode* node) {
+    free(node->data);
+    free(node);
+}
+
+void clear_node(TreeNode* root) { inorder_walk_op(root, free_node); }
+
+/* Old version of inorder_walk
 void inorder_walk(TreeNode* sub_root) {
     if (sub_root != NULL) {
         inorder_walk(sub_root->left_child);
@@ -56,41 +61,19 @@ void inorder_walk(TreeNode* sub_root) {
         printf("%d ", *((int*)sub_root->data));
     }
 }
+*/
+
+void print_node(TreeNode* node) { printf("%d ", *(int*)node->data); }
+
+void inorder_walk(TreeNode* root) {
+    inorder_walk_op(root, print_node);
+    printf("\n");
+}
 
 void inorder_walk_op(TreeNode* sub_root, void func(TreeNode*)) {
     if (sub_root != NULL) {
-        inorder_walk(sub_root->left_child);
-        inorder_walk(sub_root->right_child);
+        inorder_walk_op(sub_root->left_child, func);
+        inorder_walk_op(sub_root->right_child, func);
         func(sub_root);
     }
-}
-
-void print_node(TreeNode* n) { printf("%d ", *(int*)n->data); }
-
-int main() {
-    /* Let us create following BST
-          50
-       /     \
-      30      70
-     /  \    /  \
-   20   40  60   80 */
-    TreeNode* root = NULL;
-    root = int2void(50);
-
-    TreeNode* left_sub = int2void(30);
-    add_left_node(left_sub, int2void(20));
-    add_right_node(left_sub, int2void(40));
-
-    TreeNode* right_sub = int2void(70);
-    add_left_node(right_sub, int2void(60));
-    add_right_node(right_sub, int2void(80));
-
-    add_left_node(root, left_sub);
-    add_right_node(root, right_sub);
-
-    // inorder_walk(root);
-    inorder_walk_op(root, print_node);
-
-    clear_node(root);
-    return 0;
 }
