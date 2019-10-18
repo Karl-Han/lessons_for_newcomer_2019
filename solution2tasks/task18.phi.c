@@ -7,12 +7,12 @@ int gcd(int a, int b) {
         b = a;
         a = temp;
     }
-    while (a % b) {
+    while (b) {
         int temp = a;
         a = b;
         b = temp % b;
     }
-    return b;
+    return a;
 }
 
 int phi(int n) {
