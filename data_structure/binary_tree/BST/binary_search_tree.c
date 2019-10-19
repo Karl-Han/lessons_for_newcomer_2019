@@ -127,24 +127,25 @@ Node* insertion(Node* root, void* data) {
 // be_replace could not be NULL
 Node* transplant(Node* be_replace, Node* replacer, Node* root) {
     if (be_replace->parent == NULL) {
+        replacer->parent = NULL;
         return replacer;
     }
 
     if (be_replace == be_replace->parent->left_child) {
         be_replace->parent->left_child = replacer;
-        replacer->parent = be_replace->parent;
     } else {
         be_replace->parent->right_child = replacer;
-        replacer->parent = be_replace->parent;
     }
+    replacer->parent = be_replace->parent;
 
     return root;
 }
 
 Node* deletion(Node* root, Node* z) {
-    if (z->parent == NULL) {
-        return NULL;
-    }
+    // there is no point to make z special as root
+    // if (z->parent == NULL) {
+    //    return NULL;
+    //}
 
     if (z->left_child == NULL) {
         transplant(z, z->right_child, root);
