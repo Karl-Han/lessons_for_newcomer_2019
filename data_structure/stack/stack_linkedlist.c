@@ -11,7 +11,10 @@ void push(Stack* s, int key) { s->head = new_node_next(key, s->head); }
 
 bool pop(Stack* s) {
     if (!is_empty(s)) {
-        s->head = s->head->next;
+        Node* temp = s->head;
+        // s->head = s->head->next;
+        s->head = delete_key(s->head, s->head->num);
+        free(temp);
         return true;
     }
     return false;

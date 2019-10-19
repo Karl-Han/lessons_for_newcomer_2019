@@ -27,6 +27,7 @@
 
 typedef struct _Queue {
     Node* head;
+    Node* tail;
 } Queue;
 
 Queue* init();

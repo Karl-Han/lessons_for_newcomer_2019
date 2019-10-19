@@ -4,19 +4,30 @@
 Queue* init() {
     Queue* s = (Queue*)malloc(sizeof(Queue));
     s->head = NULL;
+    s->tail = NULL;
     return s;
 }
 
 bool enqueue(Queue* s, int key) {
-    s->head = add_last(s->head, key);
+    if (is_empty(s)) {
+        s->head = s->tail = new_node(key);
+        return true;
+    }
+    s->tail->next = new_node(key);
+    s->tail = s->tail->next;
     return true;
 }
 
 bool dequeue(Queue* s) {
     if (!is_empty(s)) {
-        s->head = s->head->next;
+        if (s->head == s->tail) {
+            s->head = s->tail = NULL;
+        } else {
+            s->head = s->head->next;
+        }
         return true;
     }
+
     return false;
 }
 

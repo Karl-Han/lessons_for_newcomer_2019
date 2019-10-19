@@ -23,5 +23,6 @@ Node* insert_before_key(Node* head, int key, int to_insert);
 Node* insert_after_key(Node* head, int key, int to_insert);
 
 Node* delete_key(Node* head, int key);
+// First in last out
 
 #endif

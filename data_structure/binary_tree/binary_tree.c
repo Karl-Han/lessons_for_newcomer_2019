@@ -34,6 +34,13 @@ TreeNode* int2void(int key) {
     return n;
 }
 
+TreeNode* double2void(int key) {
+    double* k = (double*)malloc(sizeof(double));
+    *k = key;
+    TreeNode* n = new_node(k);
+    return n;
+}
+
 /* Old version of clear_node
 void clear_node(TreeNode* sub_root) {
     if (sub_root != NULL) {
@@ -57,8 +64,8 @@ void clear_node(TreeNode* root) { inorder_walk_op(root, free_node); }
 void inorder_walk(TreeNode* sub_root) {
     if (sub_root != NULL) {
         inorder_walk(sub_root->left_child);
-        inorder_walk(sub_root->right_child);
         printf("%d ", *((int*)sub_root->data));
+        inorder_walk(sub_root->right_child);
     }
 }
 */
