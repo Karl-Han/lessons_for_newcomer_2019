@@ -61,9 +61,9 @@ Node* search(Node* root, void* data);
 Node* insertion(Node* root, void* data);
 
 // be_replace could not be NULL
-Node* transplant(Node* be_replace, Node* replacer, Node* root);
+Node* transplant(Node** be_replace, Node* replacer, Node** root);
 
-Node* deletion(Node* root, Node* z);
+Node* deletion(Node** root, Node* z);
 
 void inorder_walk(Node* subroot, void func(Node*));
 

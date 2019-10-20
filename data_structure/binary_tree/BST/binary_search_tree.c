@@ -24,7 +24,7 @@ Node* max_node(Node* root) {
 }
 
 Node* min_node(Node* root) {
-    Node* c = NULL;
+    Node* c = root;
 
     while (root != NULL) {
         c = root;
@@ -125,52 +125,60 @@ Node* insertion(Node* root, void* data) {
 }
 
 // be_replace could not be NULL
-Node* transplant(Node* be_replace, Node* replacer, Node* root) {
-    if (be_replace->parent == NULL) {
+Node* transplant(Node** be_replace, Node* replacer, Node** root) {
+    if (replacer == NULL) {
+        // just change be_replace to NULL
+        if ((*be_replace)->parent != NULL) {
+            (*be_replace)->parent = NULL;
+        }
+        return *root;
+    }
+    if ((*be_replace)->parent == NULL) {
+        *root = replacer;
         replacer->parent = NULL;
         return replacer;
     }
 
-    if (be_replace == be_replace->parent->left_child) {
-        be_replace->parent->left_child = replacer;
+    if ((*be_replace) == (*be_replace)->parent->left_child) {
+        (*be_replace)->parent->left_child = replacer;
     } else {
-        be_replace->parent->right_child = replacer;
+        (*be_replace)->parent->right_child = replacer;
     }
-    replacer->parent = be_replace->parent;
+    replacer->parent = (*be_replace)->parent;
 
-    return root;
+    return *root;
 }
 
-Node* deletion(Node* root, Node* z) {
+Node* deletion(Node** root, Node* z) {
     // there is no point to make z special as root
     // if (z->parent == NULL) {
     //    return NULL;
     //}
 
     if (z->left_child == NULL) {
-        transplant(z, z->right_child, root);
-        return root;
+        transplant(&z, z->right_child, root);
+        return *root;
     }
 
     // it has left_child
     if (z->right_child == NULL) {
-        transplant(z, z->left_child, root);
-        return root;
+        transplant(&z, z->left_child, root);
+        return *root;
     }
 
     // it has both child
     Node* s = min_node(z->right_child);
 
     if (s->parent != z) {
-        transplant(s, s->right_child, root);
+        transplant(&s, s->right_child, root);
         s->right_child = z->right_child;
         s->right_child->parent = s;
     }
     // common operation
-    transplant(z, s, root);
+    transplant(&z, s, root);
     s->left_child = z->left_child;
     s->left_child->parent = s;
-    return root;
+    return *root;
 }
 
 void inorder_walk(Node* subroot, void func(Node*)) {

@@ -25,8 +25,12 @@ int main() {
 
     for (int i = 0; i < counter; i++) {
         Node* to_delete = search(root, &arr[i]);
-        root = deletion(root, to_delete);
+        deletion(&root, to_delete);
         printf("%d is deleted\n", arr[i]);
+
+        if (i < counter - 2) {
+            inorder_walk(root, print);
+        }
     }
 
     inorder_walk(root, print);
