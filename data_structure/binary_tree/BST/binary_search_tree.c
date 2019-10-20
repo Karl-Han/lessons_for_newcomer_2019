@@ -88,14 +88,9 @@ Node* search(Node* root, void* data) {
     return NULL;
 }
 
-Node* insertion(Node* root, void* data) {
-    // No root
-    if (root == NULL) {
-        return new_node(data);
-    }
-
+void insertion(Tree* t, void* data) {
     Node* p = NULL;
-    Node* temp = root;
+    Node* temp = t->root;
     while (temp != NULL) {
         if (compare(data, temp->data)) {
             // data > temp->data
@@ -112,7 +107,7 @@ Node* insertion(Node* root, void* data) {
 
     if (p == NULL) {
         // origin root == NULL
-        return insert;
+        t->root = insert;
     } else if (compare(data, p->data)) {
         // data > p->data
         p->right_child = insert;
@@ -120,65 +115,51 @@ Node* insertion(Node* root, void* data) {
         // data < p->data
         p->left_child = insert;
     }
-
-    return root;
 }
 
 // be_replace could not be NULL
-Node* transplant(Node** be_replace, Node* replacer, Node** root) {
-    if (replacer == NULL) {
+void transplant(Tree* t, Node* be_replace, Node* replacer) {
+    // be_replace is root
+    if (be_replace->parent == NULL) {
         // just change be_replace to NULL
-        if ((*be_replace)->parent != NULL) {
-            (*be_replace)->parent = NULL;
-        }
-        return *root;
-    }
-    if ((*be_replace)->parent == NULL) {
-        *root = replacer;
-        replacer->parent = NULL;
-        return replacer;
+        t->root = replacer;
+        return;
     }
 
-    if ((*be_replace) == (*be_replace)->parent->left_child) {
-        (*be_replace)->parent->left_child = replacer;
+    if (be_replace == be_replace->parent->left_child) {
+        be_replace->parent->left_child = replacer;
     } else {
-        (*be_replace)->parent->right_child = replacer;
+        be_replace->parent->right_child = replacer;
     }
-    replacer->parent = (*be_replace)->parent;
-
-    return *root;
+    if (replacer != NULL) {
+        replacer->parent = be_replace->parent;
+    }
 }
 
-Node* deletion(Node** root, Node* z) {
-    // there is no point to make z special as root
-    // if (z->parent == NULL) {
-    //    return NULL;
-    //}
-
+void deletion(Tree* t, Node* z) {
     if (z->left_child == NULL) {
-        transplant(&z, z->right_child, root);
-        return *root;
+        transplant(t, z, z->right_child);
     }
 
     // it has left_child
     if (z->right_child == NULL) {
-        transplant(&z, z->left_child, root);
-        return *root;
+        transplant(t, z, z->left_child);
     }
 
-    // it has both child
-    Node* s = min_node(z->right_child);
+    else {
+        // it has both child
+        Node* s = min_node(z->right_child);
 
-    if (s->parent != z) {
-        transplant(&s, s->right_child, root);
-        s->right_child = z->right_child;
-        s->right_child->parent = s;
+        if (s->parent != z) {
+            transplant(t, s, s->right_child);
+            s->right_child = z->right_child;
+            s->right_child->parent = s;
+        }
+        // common operation
+        transplant(t, z, s);
+        s->left_child = z->left_child;
+        s->left_child->parent = s;
     }
-    // common operation
-    transplant(&z, s, root);
-    s->left_child = z->left_child;
-    s->left_child->parent = s;
-    return *root;
 }
 
 void inorder_walk(Node* subroot, void func(Node*)) {

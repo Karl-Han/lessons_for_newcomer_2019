@@ -43,6 +43,10 @@ typedef struct _Node {
     void* data;
 } Node;
 
+typedef struct _Tree {
+    Node* root;
+} Tree;
+
 Node* new_node_init(Node* parent, Node* left_child, Node* right_child,
                     void* data);
 
@@ -58,12 +62,12 @@ Node* predecessor(Node* subroot);
 
 Node* search(Node* root, void* data);
 
-Node* insertion(Node* root, void* data);
+void insertion(Tree* t, void* data);
 
 // be_replace could not be NULL
-Node* transplant(Node** be_replace, Node* replacer, Node** root);
+void transplant(Tree* t, Node* be_replace, Node* replacer);
 
-Node* deletion(Node** root, Node* z);
+void deletion(Tree* t, Node* z);
 
 void inorder_walk(Node* subroot, void func(Node*));
 
