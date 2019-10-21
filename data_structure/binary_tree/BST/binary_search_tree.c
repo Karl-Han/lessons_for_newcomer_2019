@@ -119,6 +119,14 @@ void insertion(Tree* t, void* data) {
 
 // be_replace could not be NULL
 void transplant(Tree* t, Node* be_replace, Node* replacer) {
+    // if (replacer != NULL && replacer->parent != NULL) {
+    //    if (replacer == replacer->parent->left_child) {
+    //        replacer->parent->left_child = NULL;
+    //    } else {
+    //        replacer->parent->right_child = NULL;
+    //    }
+    //}
+
     // be_replace is root
     if (be_replace->parent == NULL) {
         // just change be_replace to NULL
