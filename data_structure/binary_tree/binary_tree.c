@@ -73,7 +73,7 @@ void inorder_walk(TreeNode* root) {
 void inorder_walk_op(TreeNode* sub_root, void func(TreeNode*)) {
     if (sub_root != NULL) {
         inorder_walk_op(sub_root->left_child, func);
-        inorder_walk_op(sub_root->right_child, func);
         func(sub_root);
+        inorder_walk_op(sub_root->right_child, func);
     }
 }
