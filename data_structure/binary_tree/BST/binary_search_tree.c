@@ -92,7 +92,7 @@ void insertion(Tree* t, void* data) {
     Node* p = NULL;
     Node* temp = t->root;
     while (temp != NULL) {
-        if (compare(data, temp->data)) {
+        if (compare(data, temp->data) > 0) {
             // data > temp->data
             p = temp;
             temp = temp->right_child;
@@ -108,7 +108,7 @@ void insertion(Tree* t, void* data) {
     if (p == NULL) {
         // origin root == NULL
         t->root = insert;
-    } else if (compare(data, p->data)) {
+    } else if (compare(data, p->data) > 0) {
         // data > p->data
         p->right_child = insert;
     } else {
@@ -119,26 +119,18 @@ void insertion(Tree* t, void* data) {
 
 // be_replace could not be NULL
 void transplant(Tree* t, Node* be_replace, Node* replacer) {
-    // if (replacer != NULL && replacer->parent != NULL) {
-    //    if (replacer == replacer->parent->left_child) {
-    //        replacer->parent->left_child = NULL;
-    //    } else {
-    //        replacer->parent->right_child = NULL;
-    //    }
-    //}
-
     // be_replace is root
     if (be_replace->parent == NULL) {
         // just change be_replace to NULL
         t->root = replacer;
-        return;
     }
 
-    if (be_replace == be_replace->parent->left_child) {
+    else if (be_replace == be_replace->parent->left_child) {
         be_replace->parent->left_child = replacer;
     } else {
         be_replace->parent->right_child = replacer;
     }
+
     if (replacer != NULL) {
         replacer->parent = be_replace->parent;
     }
@@ -146,19 +138,19 @@ void transplant(Tree* t, Node* be_replace, Node* replacer) {
 
 void deletion(Tree* t, Node* z) {
     if (z->left_child == NULL) {
+        // it probably has right_child
         transplant(t, z, z->right_child);
     }
-
-    // it has left_child
-    if (z->right_child == NULL) {
+    else if (z->right_child == NULL) {
+        // it has left_child
         transplant(t, z, z->left_child);
     }
-
     else {
         // it has both child
         Node* s = min_node(z->right_child);
 
         if (s->parent != z) {
+            // s is not child of z
             transplant(t, s, s->right_child);
             s->right_child = z->right_child;
             s->right_child->parent = s;
